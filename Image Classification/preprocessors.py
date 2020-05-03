@@ -4,9 +4,13 @@ import cv2
 def x_cord_contour(contour):
     # This function take a contour from findContours
     # it then outputs the x centroid coordinates
-    M = cv2.moments(contour)
-    return (int(M['m10']/M['m00']))
-
+    
+    if cv2.contourArea(contour) > 10:
+        M = cv2.moments(contour)
+        return (int(M['m10']/M['m00']))
+    else:
+        pass
+        
 
 def makeSquare(not_square):
     # This function takes an image and makes the dimenions square
@@ -26,9 +30,10 @@ def makeSquare(not_square):
         width = width * 2
         #print("New Height = ", height, "New Width = ", width)
         if (height > width):
-            pad = int((height - width)/2)
+            pad = (height - width)/2
             #print("Padding = ", pad)
-            doublesize_square = cv2.copyMakeBorder(doublesize,0,0,pad,pad,cv2.BORDER_CONSTANT,value=BLACK)
+            doublesize_square = cv2.copyMakeBorder(doublesize,0,0,pad,\
+                                                   pad,cv2.BORDER_CONSTANT,value=BLACK)
         else:
             pad = (width - height)/2
             #print("Padding = ", pad)
